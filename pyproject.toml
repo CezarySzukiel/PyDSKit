@@ -1,22 +1,21 @@
 [build-system]
-requires = ["uv"]
-build-backend = "uv.pypackages"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "PyDSKit"
 version = "0.1.0"
-description = "A tool for generating Data Science project structures
+description = "A tool for generating Data Science project structures"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Cezary", email = "cezary.szukiel@gmail.com"}]
 dependencies = [
-    "flit>=3.11.0",
+#    "flit>=3.11.0",
     "typer>=0.15.2",
 ]
 
-[tool.uv]
-package = "app"
-
+[tool.flit.module]
+name = "app"
 
 [project.scripts]
 pydskit = "app.cli.main:main_app"
