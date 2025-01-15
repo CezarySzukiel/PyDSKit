@@ -1,9 +1,70 @@
+[build-system]
+requires = ["uv"]
+build-backend = "uv.pypackages"
+
 [project]
-name = "pydatastacker"
+name = "PyDSKit"
 version = "0.1.0"
-description = "Add your description here"
+description = "A tool for generating Data Science project structures
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
+authors = [{name = "Cezary", email = "cezary.szukiel@gmail.com"}]
 dependencies = [
+    "flit>=3.11.0",
     "typer>=0.15.2",
 ]
+
+[tool.uv]
+package = "app"
+
+
+[project.scripts]
+pydskit = "app.cli.main:main_app"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+env_files = ".env/.env-pytest"
+testpaths = [
+    "tests",
+    "conftest",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "smoke: business core tests",
+]
+addopts = [
+    "-ra -q",
+    "--cov=.",
+    "--cov-report",
+    "term-missing:skip-covered",
+    "--cov-fail-under=80"
+]
+
+[tool.coverage.run]
+omit = [
+    "*/tests/*.py",
+    "conftest/*"
+]
+
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+warn_return_any = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
